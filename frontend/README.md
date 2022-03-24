@@ -1,4 +1,4 @@
-# nix_shop
+# nix-shop
 
 ## Project setup
 ```
