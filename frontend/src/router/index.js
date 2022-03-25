@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MenuView from '@/views/MenuView'
 import ProductView from '@/views/ProductView'
 import BasketView from '@/views/BasketView'
+import LoginView from '@/views/LoginView'
+import SupplierView from '@/views/SupplierView'
 
 const routes = [
   {
@@ -16,9 +18,19 @@ const routes = [
     component: ProductView
   },
   {
+    path: '/suppliers/:id',
+    name: 'supplier',
+    component: SupplierView
+  },
+  {
     path: '/basket',
     name: 'basket',
     component: BasketView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
   },
   {
     path: '/about',

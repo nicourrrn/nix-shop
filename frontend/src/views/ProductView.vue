@@ -6,14 +6,13 @@
   <div v-else>
     <div class="main-info">
       <h2 class="name">{{product.name}}</h2>
-      <img :src="product.imgSrc" class="img"/>
+      <span class="supplier" @click="() => $router.push('/suppliers/'+product.supplier.id)">{{product.supplier.name}}</span>
+      <img :src="product.image" class="img"/>
     </div>
     <div class="sub-info">
       <span class="ingredients">{{ product.ingredients.join(", ") }}</span>
-      <div>
-        <span class="type">{{product.type}}</span>
-        <span class="price">{{product.price}}</span>
-      </div>
+      <span class="type">{{product.type}}</span>
+      <span class="price">{{product.price}}</span>
       <input type="button" value="Додати до кошика" @click="addToBasket" />
       <input type="number" v-model="productCount">
     </div>

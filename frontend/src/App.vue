@@ -1,31 +1,36 @@
 <template>
   <nav>
-    <router-link to="/">Menu</router-link> |
-    <router-link to="/basket">Basket</router-link> |
-    <router-link to="/about">About</router-link>
+    <div class="center">
+      <router-link to="/">Menu</router-link> |
+      <router-link to="/basket">Basket</router-link>
+    </div>
+    <div class="right-side">
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
   </nav>
   <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<style lang="sass">
+#app
+  font-family: Avenir, Helvetica, Arial, sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  color: #2c3e50
 
-nav {
-  padding: 30px;
+nav
+  display: flex
+  justify-content: flex-end
+  padding: 30px
+  a
+    font-weight: bold
+    color: #2c3e50
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    &.router-link-exact-active
+      color: #42b983
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+  .right-side
+    margin-left: 10%
+
 </style>

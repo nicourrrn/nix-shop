@@ -61,8 +61,9 @@ export default {
       )
     },
     lookedProducts () {
+      console.log(this.$store.getters.products)
       return this.$store.getters.products.filter(
-        value => this.setting.added_ingredient.every(e => value.ingredients.includes(e))
+        product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient))
       )
     }
 
