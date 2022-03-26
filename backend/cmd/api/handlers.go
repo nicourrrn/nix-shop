@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
@@ -90,6 +91,21 @@ func GetSuppliers(writer http.ResponseWriter, request *http.Request) {
 	}
 	suppliers := db.Suppliers.GetSuppliers()
 	err := json.NewEncoder(writer).Encode(suppliers)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	supplierId, err := strconv.Atoi(request.URL.Query().Get("id"))
+	if err != nil {
+		panic(err)
+	}
+	err = json.NewEncoder(writer).Encode(db.Products.GetProducts(int64(supplierId)))
 	if err != nil {
 		panic(err)
 	}

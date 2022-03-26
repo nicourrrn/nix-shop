@@ -12,7 +12,7 @@ func main() {
 	api.HandleFunc("/user/signin", PostSignIn)
 	api.HandleFunc("/user/signup", PostSignUp)
 	api.HandleFunc("/suppliers", GetSuppliers)
-	//api.Handle("/suppliers/", nil)
+	api.HandleFunc("/products", GetSupplierMenu)
 
 	log.Println(http.ListenAndServe(":8000", api))
 

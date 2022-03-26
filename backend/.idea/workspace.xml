@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add jwt token support">
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add auth and supplier handlers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/api/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/handlers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db/supplier.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/supplier.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/jwt_handler/pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/jwt_handler/pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/products.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/products.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +114,8 @@
     <MESSAGE value="Add login page&#10;Restruct vue store" />
     <MESSAGE value="Add ingredients handler" />
     <MESSAGE value="Add jwt token support" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add jwt token support" />
+    <MESSAGE value="Add auth and supplier handlers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add auth and supplier handlers" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
