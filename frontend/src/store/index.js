@@ -45,7 +45,7 @@ export default createStore({
       return result
     },
     basketProducts: (state) => state.basket.productsInfo,
-    backendUrl: (state) => state.backendUrl,
+    backendUrl: (state) => state.backendUrl
   },
   mutations: {
     addProduct (state, saledProductInfo) {
