@@ -9,10 +9,10 @@ type TokenPair struct {
 	RefreshToken, AccessToken *UserClaim
 }
 
-func NewTokenPair(userId int64) TokenPair {
+func NewTokenPair(userId int64, userType string) TokenPair {
 	return TokenPair{
-		RefreshToken: NewUserClaim(userId, time.Now().Add(refreshLifeTime)),
-		AccessToken:  NewUserClaim(userId, time.Now().Add(accessLifeTime)),
+		RefreshToken: NewUserClaim(userId, userType, time.Now().Add(refreshLifeTime)),
+		AccessToken:  NewUserClaim(userId, userType, time.Now().Add(accessLifeTime)),
 	}
 }
 func NewTokenPairFromStrings(refresh, access string) (pair TokenPair, err error) {

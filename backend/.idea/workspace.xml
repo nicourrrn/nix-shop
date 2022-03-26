@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add ingredients handler">
-      <change afterPath="$PROJECT_DIR$/pkg/jwt_handler/pair.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/jwt_handler/token.go" afterDir="false" />
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add jwt token support">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/api/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/supplier.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/supplier.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/jwt_handler/pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/jwt_handler/pair.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +30,14 @@
   <component name="GOROOT" url="file:///usr/lib/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
@@ -65,6 +78,12 @@
     <configuration name="go build backend/cmd/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="accessKey" value="access" />
+        <env name="refreshKey" value="refresh" />
+        <env name="accessLifeTime" value="60" />
+        <env name="refreshLifeTime" value="600" />
+      </envs>
       <kind value="PACKAGE" />
       <package value="backend/cmd/api" />
       <directory value="$PROJECT_DIR$" />
@@ -99,7 +118,8 @@
     <MESSAGE value="Init commit" />
     <MESSAGE value="Add login page&#10;Restruct vue store" />
     <MESSAGE value="Add ingredients handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add ingredients handler" />
+    <MESSAGE value="Add jwt token support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add jwt token support" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
