@@ -60,6 +60,14 @@ func (repo *clientRepo) UpdateClientRefToken(id int64, refreshToken string) {
 	}
 }
 
+func (repo *clientRepo) GetClientRefToken(id int64) (refToken string) {
+	err := repo.connection.Get(&refToken, "SELECT refresh_token FROM clients WHERE id = ?", id)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
 func (repo *clientRepo) LoginClient(email string, password string) (id int64) {
 	client := struct {
 		Id       int64  `db:"id"`

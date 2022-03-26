@@ -11,6 +11,7 @@ func main() {
 	api.HandleFunc("/ingredients", GetAllIngredients)
 	api.HandleFunc("/user/signin", PostSignIn)
 	api.HandleFunc("/user/signup", PostSignUp)
+	api.HandleFunc("/user/refresh", PostRefresh)
 	api.HandleFunc("/suppliers", GetSuppliers)
 	api.HandleFunc("/products", GetSupplierMenu)
 

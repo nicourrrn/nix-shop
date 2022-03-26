@@ -4,6 +4,7 @@ import (
 	"backend/internal/db"
 	"backend/pkg/jwt_handler"
 	"encoding/json"
+	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
 	"strconv"
@@ -76,6 +77,48 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 	db.Clients.UpdateClientRefToken(id, ref)
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
+		"refreshToken": ref,
+		"accessToken":  acc,
+	})
+	if err != nil {
+		panic(err)
+	}
+}
+
+type RefreshRequest struct {
+	RefreshToken string `json:"refreshToken"`
+	AccessToken  string `json:"accessToken"`
+}
+
+func PostRefresh(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodPost {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	refRequest := RefreshRequest{}
+	err := json.NewDecoder(request.Body).Decode(&refRequest)
+	if err != nil {
+		panic(err)
+	}
+
+	pair, err := jwt_handler.NewTokenPairFromStrings(refRequest.RefreshToken, refRequest.AccessToken)
+	if err != nil {
+		panic(err)
+	}
+	refToken := db.Clients.GetClientRefToken(pair.AccessToken.UserId)
+
+	err = bcrypt.CompareHashAndPassword([]byte(refToken), []byte(refRequest.RefreshToken))
+	if err != nil {
+		panic(err)
+	}
+	ref, acc, err := jwt_handler.NewTokenPair(pair.AccessToken.UserId, "client").GetStrings()
+	if err != nil {
+		panic(err)
+	}
+
+	db.Clients.UpdateClientRefToken(pair.AccessToken.UserId, ref)
+
+	err = json.NewEncoder(writer).Encode(map[string]string{
 		"refreshToken": ref,
 		"accessToken":  acc,
 	})
