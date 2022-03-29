@@ -58,6 +58,9 @@ export default createStore({
     setUser (state, user) {
       state.userData = user
       localStorage.setItem('userData', JSON.stringify(user))
+    },
+    removeProductFromBasket (state, productId) {
+      state.basket.productsInfo = state.basket.productsInfo.filter(value => value.product.id !== productId)
     }
   },
   actions: {
