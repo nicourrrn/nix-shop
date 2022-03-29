@@ -6,10 +6,11 @@
           v-model="setting.input_form"
           placeholder="Название ингредиента"
           type="text"
+          class="ingredient-input"
         />
         <div class="sort-preview">
           <div
-            v-for="(ingredient, index) in addebleIngredients"
+            v-for="(ingredient, index) in addebleIngredients.slice(0, 10)"
             :key="index"
             class="ingredient"
             @click="setting.added_ingredient.push(ingredient)"
@@ -77,24 +78,24 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
-.ingredient
-  margin: 5px
-
 .menu
+  display: grid
+  grid-template-columns: 30% 68%
+
+.menu-setting
   display: flex
+  margin: 2vh 2vw
+  .ingredient-input
+    width: 100%
+  .ingredient
+    margin: 1vw 0
+    &:hover
+      color: dodgerblue
+      cursor: cell
 
-  .sort-preview
-    display: flex
-
-    .ingredient
-      &:hover
-        background-color: #42b983
-
-  .checked-ingredients
-    display: flex
-
-    .ingredient
-      &:hover
-        background-color: #2c3e50
+.menu-list
+  display: grid
+  grid-template-columns: 1fr 1fr
+  column-gap: 5px
+  row-gap: 5px
 </style>
