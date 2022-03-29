@@ -3,18 +3,22 @@
   <h1 v-if="product === undefined">
     Product not found
   </h1>
-  <div v-else>
+  <div v-else class="product">
     <div class="main-info">
       <h2 class="name">{{product.name}}</h2>
-      <span class="supplier" @click="() => $router.push('/suppliers/'+product.supplier.id)">{{product.supplier.name}}</span>
+      <span class="supplier" @click="() => $router.push('/suppliers/'+product.supplier.id)">Постачальник: {{product.supplier.name}}</span>
       <img :src="product.image" class="img"/>
     </div>
     <div class="sub-info">
-      <span class="ingredients">{{ product.ingredients.join(", ") }}</span>
-      <span class="type">{{product.type}}</span>
-      <span class="price">{{product.price}}</span>
-      <input type="button" value="Додати до кошика" @click="addToBasket" />
-      <input type="number" v-model="productCount" min="1" max="20">
+      <span class="ingredients">Ingredients: {{ product.ingredients.join(", ") }}</span>
+      <div class="info">
+        <span class="type">Type: {{product.type}}</span>
+        <span class="price">Price: {{product.price * productCount}}</span>
+      </div>
+      <div class="add">
+        <input type="button" value="Додати до кошика" @click="addToBasket" />
+        <input type="number" v-model="productCount" min="1" max="20">
+      </div>
     </div>
   </div>
 </div>
@@ -41,12 +45,32 @@ export default {
   },
   data () {
     return {
-      productCount: 0
+      productCount: 1
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="sass">
+.product
+  display: flex
+.main-info
+  display: flex
+  flex-direction: column
+  h2
+    margin-bottom: 1px
+img
+  max-width: 100%
+  max-height: 100%
 
+.sub-info
+  margin: 70px 10px
+  display: flex
+  flex-direction: column
+.info
+  display: flex
+  justify-content: space-around
+.add
+  display: flex
+  flex-direction: column
 </style>
