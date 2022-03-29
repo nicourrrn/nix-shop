@@ -84,3 +84,33 @@ func (repo *clientRepo) LoginClient(email string, password string) (id int64, na
 	}
 	return client.Id, client.Name
 }
+
+type ProductToBask struct {
+	Count     int     `json:"count"`
+	ProductId int     `json:"productId"`
+	PriceOne  float32 `json:"priceOne"`
+}
+
+func (repo *clientRepo) NewBacket(clientId int64, address string, products []ProductToBask) int64 {
+	var finalPrice float32
+	for _, p := range products {
+		finalPrice += p.PriceOne * float32(p.Count)
+	}
+	result, err := repo.connection.Exec("INSERT INTO baskets(client_id, price, address) VALUE (?, ?, ?)", clientId, finalPrice, address)
+	if err != nil {
+		panic(err)
+	}
+
+	basketId, err := result.LastInsertId()
+	if err != nil {
+		panic(err)
+	}
+	for _, p := range products {
+		_, err = repo.connection.Exec("INSERT INTO product_basket(product_id, basket_id, count) VALUE (?, ?, ?)", p.ProductId, basketId, p.Count)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return basketId
+}

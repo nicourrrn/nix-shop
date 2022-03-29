@@ -27,9 +27,16 @@ export default createStore({
     ingredients: (state) => state.allIngredients,
     products: (state) => state.products,
     basketProducts: (state) => state.basket.productsInfo,
-    backendUrl: (state) => state.backendUrl
+    basketAddress: (state) => state.basket.address
+
   },
   mutations: {
+    clearBasket (state) {
+      state.basket = {
+        productsInfo: [],
+        address: ''
+      }
+    },
     addProductToBasket (state, saledProductInfo) {
       const productsIds = state.basket.productsInfo.map(value => value.product.id)
       if (!productsIds.includes(saledProductInfo.product.id)) {
@@ -142,6 +149,27 @@ export default createStore({
       }
       localStorage.setItem('refreshToken', response.refreshToken)
       context.commit('setUser', newUser)
+    },
+
+    async sendBasket (context) {
+      let savedProducts = context.getters.basketProducts
+
+      savedProducts = savedProducts.map(v => ({
+        count: v.count,
+        productId: v.product.id,
+        priceOne: v.product.price
+      }))
+
+      const address = context.getters.basketAddress
+      const user = context.getters.userData
+      const response = (await axios.post(
+        `${backendUrl}/basket/new`,
+        JSON.stringify({ address: address, products: savedProducts }),
+        { headers: { 'Access-Token': user.accessToken } }
+      )).data
+
+      alert(`Дякуємо за замовлення, ваш номер ${response.basketId}`)
+      context.commit('clearBasket')
     }
   },
   modules: {}

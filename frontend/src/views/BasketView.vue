@@ -33,7 +33,7 @@ export default {
         return
       }
       this.$store.commit('setAddress', this.address)
-      alert(`Дякуємо за замовлення, ваш номер ${(Math.random() * 100000).toFixed()}`)
+      this.$store.dispatch('sendBasket')
       this.$router.push('/')
     }
   }
