@@ -14,7 +14,7 @@
       <span class="type">{{product.type}}</span>
       <span class="price">{{product.price}}</span>
       <input type="button" value="Додати до кошика" @click="addToBasket" />
-      <input type="number" v-model="productCount" min="0" max="20">
+      <input type="number" v-model="productCount" min="1" max="20">
     </div>
   </div>
 </div>
