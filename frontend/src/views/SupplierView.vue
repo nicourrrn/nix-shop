@@ -6,13 +6,15 @@
     <div v-else>
       <div class="main-info">
         <h2 class="name">{{supplier.name}}</h2>
+        <span class="type">Type: {{supplier.type}}</span>
         <img :src="supplier.image" class="img"/>
-        <span class="type">{{supplier.type}}</span>
       </div>
+      <h3>Products: </h3>
       <div class="product-list">
-        <ProductListElement v-for="(product, index) in supplier.menu"
+        <ProductListElement v-for="(product, index) in menu"
                             :key="index"
                             :product="product"
+                            class="item"
         ></ProductListElement>
       </div>
     </div>
@@ -30,7 +32,11 @@ export default {
           return value
         }
       }
-      return undefined
+      return []
+    },
+    menu () {
+      const menu = this.$store.getters.products
+      return menu.filter(value => value.supplier.id === this.supplier.id)
     }
   },
   components: {
@@ -39,6 +45,21 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="sass">
+.main-info
+  display: flex
+  flex-direction: column
+  span
+    margin-left: 10px
+  h2
+    margin: 10px 0
+  img
+    max-height: 50%
+    max-width: 50%
+    align-self: center
+  margin-bottom: 10px
+.product-list
+  display: flex
+  .item
+    margin: 10px
 </style>

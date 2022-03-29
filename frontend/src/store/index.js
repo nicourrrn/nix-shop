@@ -6,10 +6,7 @@ const backendUrl = 'http://localhost:8000'
 export default createStore({
   state: {
     allIngredients: [],
-    suppliers: [{
-      id: 33,
-      name: 'texst'
-    }],
+    suppliers: [],
     products: [],
     basket: {
       productsInfo: [],

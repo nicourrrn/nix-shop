@@ -62,7 +62,11 @@ export default {
 img
   max-width: 100%
   max-height: 100%
-
+.supplier
+  color: royalblue
+  cursor: pointer
+  &:hover
+    color: blueviolet
 .sub-info
   margin: 70px 10px
   display: flex
