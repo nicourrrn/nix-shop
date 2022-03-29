@@ -26,7 +26,6 @@ func AddHeaders(next http.Handler) http.Handler {
 		writer.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, withCredentials")
 		writer.Header().Set("Access-Control-Allow-Methods", "GET, POST")
 		writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		log.Println(request.RequestURI)
 		if request.Method != http.MethodOptions {
 			next.ServeHTTP(writer, request)
 		}

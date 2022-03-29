@@ -8,19 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 )
-
-func GetRefCookie(ref string) *http.Cookie {
-	return &http.Cookie{
-		Name:     "RefreshToken",
-		Value:    ref,
-		Expires:  time.Now().Add(time.Hour * 480),
-		SameSite: http.SameSiteNoneMode,
-		Secure:   true,
-		Path:     "/user/refresh",
-	}
-}
 
 func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
 	if request.Method != http.MethodGet {
@@ -63,10 +51,10 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 		log.Fatalln(err)
 	}
 	db.Clients.UpdateClientRefToken(clientId, ref)
-	http.SetCookie(writer, GetRefCookie(ref))
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
-		"accessToken": acc,
+		"accessToken":  acc,
+		"refreshToken": ref,
 	})
 	if err != nil {
 		panic(err)
@@ -94,11 +82,10 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 	ref, acc, err := jwt_handler.NewTokenPair(id, "client").GetStrings()
 	db.Clients.UpdateClientRefToken(id, ref)
 
-	http.SetCookie(writer, GetRefCookie(ref))
-
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
-		"name":        name,
-		"accessToken": acc,
+		"name":         name,
+		"accessToken":  acc,
+		"refreshToken": ref,
 	})
 	if err != nil {
 		panic(err)
@@ -121,14 +108,6 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 
-	log.Println(request.Cookies())
-
-	cookie, err := request.Cookie("RefreshToken")
-	if err != nil {
-		panic(err)
-	}
-	refRequest.RefreshToken = cookie.Value
-
 	pair, err := jwt_handler.NewTokenPairFromStrings(refRequest.RefreshToken, refRequest.AccessToken)
 	if err != nil {
 		panic(err)
@@ -145,10 +124,10 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	db.Clients.UpdateClientRefToken(pair.AccessToken.UserId, ref)
-	http.SetCookie(writer, GetRefCookie(ref))
 
 	err = json.NewEncoder(writer).Encode(map[string]string{
-		"accessToken": acc,
+		"accessToken":  acc,
+		"refreshToken": ref,
 	})
 	if err != nil {
 		panic(err)
