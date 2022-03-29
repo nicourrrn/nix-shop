@@ -1,7 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
 const backendUrl = 'http://localhost:8000'
 
 export default createStore({
@@ -85,7 +84,6 @@ export default createStore({
         alert('Empty line')
         return
       }
-
       const response = (await axios.post(`${backendUrl}/user/signin`,
         JSON.stringify({
           email: email,
@@ -97,6 +95,8 @@ export default createStore({
         email: email,
         accessToken: response.accessToken
       }
+      localStorage.setItem('refreshToken', response.refreshToken)
+
       context.commit('setUser', newUser)
     },
     async signUp (context, userData) {
@@ -118,24 +118,29 @@ export default createStore({
         email: email,
         accessToken: response.accessToken
       }
+      localStorage.setItem('refreshToken', response.refreshToken)
       context.commit('setUser', newUser)
     },
     async refresh (context) {
       context.dispatch('loadUser')
       const user = context.getters.userData
+      const refreshToken = localStorage.getItem('refreshToken')
       if (user.accessToken === '') {
         return
       }
       const response = (await axios.post(`${backendUrl}/user/refresh`, JSON.stringify(
         {
-          accessToken: user.accessToken
+          accessToken: user.accessToken,
+          refreshToken: refreshToken
         }
       ))).data
+
       const newUser = {
         name: user.name,
         email: user.email,
         accessToken: response.accessToken
       }
+      localStorage.setItem('refreshToken', response.refreshToken)
       context.commit('setUser', newUser)
     }
   },
