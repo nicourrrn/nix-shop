@@ -160,3 +160,36 @@ func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 }
+
+type PostBasketRequest struct {
+	Address  string             `json:"address"`
+	Products []db.ProductToBask `json:"products"`
+}
+
+func PostBasket(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodPost {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	accessTokenString := request.Header.Get("Access-Token")
+	accessClaim, err := jwt_handler.GetClaim(accessTokenString, jwt_handler.GetAccess())
+	if err != nil {
+		log.Println(accessTokenString)
+		panic(err)
+	}
+	req := PostBasketRequest{}
+	err = json.NewDecoder(request.Body).Decode(&req)
+	if err != nil {
+		panic(err)
+	}
+
+	basketId := db.Clients.NewBacket(accessClaim.UserId, req.Address, req.Products)
+
+	err = json.NewEncoder(writer).Encode(map[string]interface{}{
+		"basketId": basketId,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
