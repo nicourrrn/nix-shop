@@ -14,7 +14,7 @@
       <span class="type">{{product.type}}</span>
       <span class="price">{{product.price}}</span>
       <input type="button" value="Додати до кошика" @click="addToBasket" />
-      <input type="number" v-model="productCount">
+      <input type="number" v-model="productCount" min="0" max="20">
     </div>
   </div>
 </div>
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     addToBasket () {
-      this.$store.commit('addProduct', { product: this.product, count: this.productCount })
+      this.$store.commit('addProductToBasket', { product: this.product, count: this.productCount })
       this.$router.push('/basket')
     }
   },

@@ -8,14 +8,30 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
+
+func GetRefCookie(ref string) *http.Cookie {
+	return &http.Cookie{
+		Name:     "RefreshToken",
+		Value:    ref,
+		Expires:  time.Now().Add(time.Hour * 480),
+		SameSite: http.SameSiteNoneMode,
+		Secure:   true,
+		Path:     "/user/refresh",
+	}
+}
 
 func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
 	if request.Method != http.MethodGet {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	err := json.NewEncoder(writer).Encode(db.Products.GetAllIngredients())
+	response := make([]string, 0)
+	for _, ingr := range db.Products.GetAllIngredients() {
+		response = append(response, ingr.Name)
+	}
+	err := json.NewEncoder(writer).Encode(response)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -28,7 +44,7 @@ type SignUpRequest struct {
 }
 
 func PostSignUp(writer http.ResponseWriter, request *http.Request) {
-	if request.Method != http.MethodPost {
+	if !(request.Method == http.MethodPost) {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -47,12 +63,14 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 		log.Fatalln(err)
 	}
 	db.Clients.UpdateClientRefToken(clientId, ref)
+	http.SetCookie(writer, GetRefCookie(ref))
 
-	json.NewEncoder(writer).Encode(map[string]interface{}{
-		"refreshToken": ref,
-		"accessToken":  acc,
+	err = json.NewEncoder(writer).Encode(map[string]interface{}{
+		"accessToken": acc,
 	})
-
+	if err != nil {
+		panic(err)
+	}
 }
 
 type SignInRequest struct {
@@ -72,13 +90,15 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 
-	id := db.Clients.LoginClient(req.Email, req.Password)
+	id, name := db.Clients.LoginClient(req.Email, req.Password)
 	ref, acc, err := jwt_handler.NewTokenPair(id, "client").GetStrings()
 	db.Clients.UpdateClientRefToken(id, ref)
 
+	http.SetCookie(writer, GetRefCookie(ref))
+
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
-		"refreshToken": ref,
-		"accessToken":  acc,
+		"name":        name,
+		"accessToken": acc,
 	})
 	if err != nil {
 		panic(err)
@@ -101,6 +121,14 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 
+	log.Println(request.Cookies())
+
+	cookie, err := request.Cookie("RefreshToken")
+	if err != nil {
+		panic(err)
+	}
+	refRequest.RefreshToken = cookie.Value
+
 	pair, err := jwt_handler.NewTokenPairFromStrings(refRequest.RefreshToken, refRequest.AccessToken)
 	if err != nil {
 		panic(err)
@@ -117,10 +145,10 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	db.Clients.UpdateClientRefToken(pair.AccessToken.UserId, ref)
+	http.SetCookie(writer, GetRefCookie(ref))
 
 	err = json.NewEncoder(writer).Encode(map[string]string{
-		"refreshToken": ref,
-		"accessToken":  acc,
+		"accessToken": acc,
 	})
 	if err != nil {
 		panic(err)

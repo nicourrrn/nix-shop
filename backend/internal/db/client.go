@@ -68,12 +68,13 @@ func (repo *clientRepo) GetClientRefToken(id int64) (refToken string) {
 	return
 }
 
-func (repo *clientRepo) LoginClient(email string, password string) (id int64) {
+func (repo *clientRepo) LoginClient(email string, password string) (id int64, name string) {
 	client := struct {
 		Id       int64  `db:"id"`
+		Name     string `db:"name"`
 		Password string `db:"password"`
 	}{}
-	err := repo.connection.Get(&client, "SELECT id, password FROM clients WHERE email = ?", email)
+	err := repo.connection.Get(&client, "SELECT id, name, password FROM clients WHERE email = ?", email)
 	if err != nil {
 		panic(err)
 	}
@@ -81,6 +82,5 @@ func (repo *clientRepo) LoginClient(email string, password string) (id int64) {
 	if err != nil {
 		panic(err)
 	}
-	id = client.Id
-	return
+	return client.Id, client.Name
 }

@@ -61,7 +61,6 @@ export default {
       )
     },
     lookedProducts () {
-      console.log(this.$store.getters.products)
       return this.$store.getters.products.filter(
         product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient))
       )
@@ -70,6 +69,9 @@ export default {
   },
   components: {
     ProductListElement
+  },
+  mounted () {
+    this.$store.dispatch('loadData')
   }
 }
 </script>

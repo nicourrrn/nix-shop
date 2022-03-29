@@ -22,3 +22,50 @@ func (repo *supplierRepo) GetSuppliers() (suppliers []Supplier) {
 	}
 	return
 }
+
+func (repo *supplierRepo) AddSupplier(supplier Supplier) int64 {
+	typeId := FindTypeId(repo.GetTypes(), supplier.Type)
+	if typeId == -1 {
+		typeId = repo.AddType(supplier.Type)
+	}
+	result, err := repo.connection.Exec(
+		"INSERT INTO suppliers(name, type_id, image, open_at, close_at) VALUE (?, ?, ?, ?, ?)",
+		supplier.Name, typeId, supplier.Image, supplier.OpenAt, supplier.CloseAt)
+	if err != nil {
+		panic(err)
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		panic(err)
+	}
+
+	if supplier.Id != 0 {
+		_, err = repo.connection.Exec("UPDATE suppliers SET id = ? WHERE id = ?", supplier.Id, id)
+		if err != nil {
+			panic(err)
+		}
+		return supplier.Id
+	}
+
+	return id
+}
+
+func (repo *supplierRepo) GetTypes() (types []Type) {
+	err := repo.connection.Select(&types, "SELECT id, name FROM supplier_types")
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (repo *supplierRepo) AddType(name string) int64 {
+	result, err := repo.connection.Exec("INSERT INTO supplier_types(name) VALUE (?)", name)
+	if err != nil {
+		panic(err)
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		panic(err)
+	}
+	return id
+}

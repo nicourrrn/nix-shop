@@ -4,11 +4,22 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add getting by supplier handlers">
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add client refresh handlers">
+      <change afterPath="$PROJECT_DIR$/cmd/updater/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/api/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/handlers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/db/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/products.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/products.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/supplier.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/supplier.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/LoginView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/MenuView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/MenuView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/ProductView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/ProductView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +80,12 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmd/updater" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build backend/cmd/api">
     <configuration name="go build backend/cmd/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <working_directory value="$PROJECT_DIR$" />
@@ -85,9 +101,23 @@
       <filePath value="$PROJECT_DIR$/cmd/api/main.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build backend/cmd/updater" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="backend/cmd/updater" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/updater/main.go" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build backend/cmd/api" />
+      <item itemvalue="Go Build.go build backend/cmd/updater" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build backend/cmd/api" />
+        <item itemvalue="Go Build.go build backend/cmd/updater" />
       </list>
     </recent_temporary>
   </component>
@@ -116,7 +146,8 @@
     <MESSAGE value="Add jwt token support" />
     <MESSAGE value="Add auth and supplier handlers" />
     <MESSAGE value="Add getting by supplier handlers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add getting by supplier handlers" />
+    <MESSAGE value="Add client refresh handlers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add client refresh handlers" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
