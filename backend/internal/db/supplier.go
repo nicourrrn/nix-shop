@@ -1,18 +1,12 @@
 package db
 
-import "github.com/jmoiron/sqlx"
+import (
+	. "backend/internal/models"
+	"github.com/jmoiron/sqlx"
+)
 
 type supplierRepo struct {
 	connection *sqlx.DB
-}
-
-type Supplier struct {
-	Id      int64  `db:"id" json:"id"`
-	Name    string `db:"name" json:"name"`
-	Image   string `db:"image" json:"image"`
-	Type    string `db:"type" json:"type"`
-	OpenAt  string `db:"open_at" json:"openAt"`
-	CloseAt string `db:"close_at" json:"closeAt"`
 }
 
 func (repo *supplierRepo) GetSuppliers() (suppliers []Supplier) {

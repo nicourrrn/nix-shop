@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/internal/db"
+	. "backend/internal/models"
 	"backend/pkg/jwt_handler"
 	"encoding/json"
 	"golang.org/x/crypto/bcrypt"
@@ -25,18 +26,12 @@ func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-type SignUpRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 	if !(request.Method == http.MethodPost) {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	req := SignUpRequest{}
+	req := BaseClient{}
 	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
 		log.Fatalln(err)
@@ -50,7 +45,7 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	db.Clients.UpdateClientRefToken(clientId, ref)
+	db.Clients.SetClientRefToken(clientId, ref)
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
 		"accessToken":  acc,
@@ -61,26 +56,21 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-type SignInRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 	if request.Method != http.MethodPost {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	req := SignInRequest{}
+	req := BaseClient{}
 	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
 		panic(err)
 	}
 
-	id, name := db.Clients.LoginClient(req.Email, req.Password)
+	id, name := db.Clients.GetClient(req.Email, req.Password)
 	ref, acc, err := jwt_handler.NewTokenPair(id, "client").GetStrings()
-	db.Clients.UpdateClientRefToken(id, ref)
+	db.Clients.SetClientRefToken(id, ref)
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
 		"name":         name,
@@ -90,11 +80,6 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-type RefreshRequest struct {
-	RefreshToken string `json:"refreshToken"`
-	AccessToken  string `json:"accessToken"`
 }
 
 func PostRefresh(writer http.ResponseWriter, request *http.Request) {
@@ -123,7 +108,7 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 
-	db.Clients.UpdateClientRefToken(pair.AccessToken.UserId, ref)
+	db.Clients.SetClientRefToken(pair.AccessToken.UserId, ref)
 
 	err = json.NewEncoder(writer).Encode(map[string]string{
 		"accessToken":  acc,
@@ -161,11 +146,6 @@ func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-type PostBasketRequest struct {
-	Address  string             `json:"address"`
-	Products []db.ProductToBask `json:"products"`
-}
-
 func PostBasket(writer http.ResponseWriter, request *http.Request) {
 	if request.Method != http.MethodPost {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
@@ -177,13 +157,13 @@ func PostBasket(writer http.ResponseWriter, request *http.Request) {
 		log.Println(accessTokenString)
 		panic(err)
 	}
-	req := PostBasketRequest{}
+	req := Basket{}
 	err = json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
 		panic(err)
 	}
 
-	basketId := db.Clients.NewBacket(accessClaim.UserId, req.Address, req.Products)
+	basketId := db.Clients.NewBacket(accessClaim.UserId, req)
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
 		"basketId": basketId,

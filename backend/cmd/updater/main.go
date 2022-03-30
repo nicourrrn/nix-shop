@@ -2,12 +2,27 @@ package main
 
 import (
 	"backend/internal/db"
+	. "backend/internal/models"
+	"encoding/json"
 	"log"
 	"os"
 )
 
+func NewFromJson(filename string) (Shop, error) {
+	open, err := os.Open(filename)
+	if err != nil {
+		return Shop{}, err
+	}
+	var shop Shop
+	err = json.NewDecoder(open).Decode(&shop)
+	if err != nil {
+		return Shop{}, err
+	}
+	return shop, nil
+}
+
 func WriteShop(shop Shop) {
-	db.Suppliers.AddSupplier(db.Supplier{
+	db.Suppliers.AddSupplier(Supplier{
 		Id:      int64(shop.Id),
 		Name:    shop.Name,
 		Image:   shop.Image,
@@ -17,7 +32,7 @@ func WriteShop(shop Shop) {
 	})
 
 	for _, prod := range shop.Menu {
-		db.Products.AddProduct(db.Product{
+		db.Products.AddProduct(Product{
 			Id:    int64(prod.Id),
 			Name:  prod.Name,
 			Price: float32(prod.Price),

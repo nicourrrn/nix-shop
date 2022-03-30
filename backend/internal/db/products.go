@@ -1,6 +1,9 @@
 package db
 
-import "github.com/jmoiron/sqlx"
+import (
+	. "backend/internal/models"
+	"github.com/jmoiron/sqlx"
+)
 
 type productRepo struct {
 	connection *sqlx.DB
@@ -11,19 +14,14 @@ func (repo *productRepo) GetAllIngredients() (ingredients []Type) {
 	return
 }
 
-func (repo *productRepo) AddIngredients(ingredients []string) {
-	allIngredients := repo.GetAllIngredients()
-	toDB := make([]map[string]interface{}, 0)
-	for _, ingredient := range ingredients {
-		if FindTypeId(allIngredients, ingredient) == -1 {
-			toDB = append(toDB, map[string]interface{}{"name": ingredient})
-		}
+func (repo *productRepo) AddIngredients(newIngredients []string) {
+	ingredients := make([]map[string]interface{}, 0)
+	for _, i := range newIngredients {
+		ingredients = append(ingredients, map[string]interface{}{"name": i})
 	}
-	if len(toDB) > 0 {
-		_, err := repo.connection.NamedExec("INSERT INTO ingredients(name) VALUES (:name)", toDB)
-		if err != nil {
-			panic(err)
-		}
+	_, err := repo.connection.NamedExec("INSERT INTO ingredients(name) VALUES (:name) ON DUPLICATE KEY UPDATE name=name", newIngredients)
+	if err != nil {
+		panic(err)
 	}
 }
 
@@ -39,20 +37,11 @@ func (repo *productRepo) ConnProdWithIngr(productId int64, ingredients []string)
 		})
 	}
 	_, err := repo.connection.NamedExec(
-		"INSERT INTO product_ingredient(product_id, ingredient_id) VALUES (:product_id, :ingredient_id)",
+		"INSERT INTO product_ingredient(product_id, ingredient_id) VALUES (:product_id, :ingredient_id) ON DUPLICATE KEY UPDATE product_id=product_id",
 		toDB)
 	if err != nil {
 		panic(err)
 	}
-}
-
-type Product struct {
-	Id          int64    `json:"id" db:"id"`
-	Name        string   `json:"name" db:"name"`
-	Price       float32  `json:"price" db:"price"`
-	Image       string   `json:"image" db:"image"`
-	Type        string   `json:"type" db:"type"`
-	Ingredients []string `json:"ingredients" db:"ingredients"`
 }
 
 func (repo *productRepo) GetProducts(supplierId int64) (menu []Product) {

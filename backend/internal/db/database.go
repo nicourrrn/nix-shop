@@ -1,6 +1,7 @@
 package db
 
 import (
+	. "backend/internal/models"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"log"
@@ -22,11 +23,6 @@ func init() {
 	Clients = clientRepo{connection: db}
 	Products = productRepo{connection: db}
 	Suppliers = supplierRepo{connection: db}
-}
-
-type Type struct {
-	Id   int64  `db:"id"`
-	Name string `db:"name"`
 }
 
 func FindTypeId(types []Type, name string) int64 {
