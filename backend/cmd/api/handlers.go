@@ -193,3 +193,16 @@ func PostBasket(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 }
+
+func GetLogOut(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	token := request.Header.Get("Access-Token")
+	claim, err := jwt_handler.GetClaim(token, jwt_handler.GetAccess())
+	if err != nil {
+		panic(err)
+	}
+	db.Clients.RemoveRefresh(claim.UserId)
+}

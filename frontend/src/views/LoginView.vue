@@ -19,6 +19,7 @@
       <input type="button" @click="this.SignUp" value="SignUp" :disabled="password !== copyPassword || password.length === 0 || name.length === 0 || email.length === 0">
     </div>
     <input type="button" :value="newUser ? 'SingIn' : 'SingUp'" @click="() => newUser = !newUser"/>
+    <input type="button" value="LogOut" @click="() => $store.dispatch('LogOut')" />
   </div>
 </template>
 

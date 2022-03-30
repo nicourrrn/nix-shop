@@ -114,3 +114,10 @@ func (repo *clientRepo) NewBacket(clientId int64, address string, products []Pro
 
 	return basketId
 }
+
+func (repo *clientRepo) RemoveRefresh(clientId int64) {
+	_, err := repo.connection.Exec("UPDATE clients SET refresh_token = '' WHERE id = ?", clientId)
+	if err != nil {
+		panic(err)
+	}
+}

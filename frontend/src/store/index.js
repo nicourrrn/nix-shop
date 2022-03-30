@@ -170,6 +170,17 @@ export default createStore({
 
       alert(`Дякуємо за замовлення, ваш номер ${response.basketId}`)
       context.commit('clearBasket')
+    },
+    async LogOut (state) {
+      localStorage.removeItem('userData')
+      localStorage.removeItem('refreshToken')
+      const token = state.getters.userData.accessToken
+      if (token === '') {
+        return
+      }
+      axios
+        .get(`${backendUrl}/user/logout`, { headers: { 'Access-Token': token } })
+        .catch(err => alert(err))
     }
   },
   modules: {}
