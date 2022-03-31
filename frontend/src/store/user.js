@@ -1,3 +1,6 @@
+import axios from 'axios'
+const backendUrl = 'http://localhost:8000'
+
 const userModule = {
   state: {
     checkedProducts: [],
