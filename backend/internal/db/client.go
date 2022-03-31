@@ -14,7 +14,7 @@ type clientRepo struct {
 func (repo *clientRepo) NewClient(name, email, password string) (int64, error) {
 	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Fatalln(err)
+		return -1, err
 	}
 	scannedClient := BaseClient{
 		Name:     name,
@@ -25,33 +25,21 @@ func (repo *clientRepo) NewClient(name, email, password string) (int64, error) {
 		"INSERT INTO clients(name, email, password) VALUE (:name, :email, :password)",
 		scannedClient)
 	if err != nil {
-		log.Fatalln(err)
+		return -1, err
 	}
 	return result.LastInsertId()
 }
 
-//func (repo *clientRepo) GetClient(key string, value interface{}) (result map[string]interface{}) {
-//	var err error
-//	switch key {
-//	case "ID":
-//		err = repo.connection.Select(result, "SELECT * FROM clients WHERE id = $1", value)
-//	}
-//	if err != nil {
-//		log.Fatalln(err)
-//	}
-//	return
-//}
-
-func (repo *clientRepo) GetClient(email string, password string) (id int64, name string) {
+func (repo *clientRepo) GetClient(email string, password string) (id int64, name string, err error) {
 	row := repo.connection.QueryRow("SELECT id, name, password FROM clients WHERE email = ?", email)
 	var savedPassword string
-	err := row.Scan(&id, &name, &password)
+	err = row.Scan(&id, &name, &password)
 	if err != nil {
-		panic(err)
+		return
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(savedPassword), []byte(password))
 	if err != nil {
-		panic(err)
+		return
 	}
 	return
 }

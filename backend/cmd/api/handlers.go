@@ -6,7 +6,6 @@ import (
 	"backend/pkg/jwt_handler"
 	"encoding/json"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -19,16 +18,19 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 	req := BaseClient{}
 	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	clientId, err := db.Clients.NewClient(req.Name, req.Email, req.Password)
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	pair := jwt_handler.NewTokenPair(clientId, "client")
 	ref, acc, err := pair.GetStrings()
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	db.Clients.SetClientRefToken(clientId, ref)
 
@@ -37,7 +39,8 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 		"refreshToken": ref,
 	})
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -50,11 +53,20 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 	req := BaseClient{}
 	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 
-	id, name := db.Clients.GetClient(req.Email, req.Password)
+	id, name, err := db.Clients.GetClient(req.Email, req.Password)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
+	}
 	ref, acc, err := jwt_handler.NewTokenPair(id, "client").GetStrings()
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	db.Clients.SetClientRefToken(id, ref)
 
 	err = json.NewEncoder(writer).Encode(map[string]interface{}{
@@ -63,7 +75,8 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 		"refreshToken": ref,
 	})
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -72,25 +85,29 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	refRequest := RefreshRequest{}
+	refRequest := Tokens{}
 	err := json.NewDecoder(request.Body).Decode(&refRequest)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	pair, err := jwt_handler.NewTokenPairFromStrings(refRequest.RefreshToken, refRequest.AccessToken)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	refToken := db.Clients.GetClientRefToken(pair.AccessToken.UserId)
 
 	err = bcrypt.CompareHashAndPassword([]byte(refToken), []byte(refRequest.RefreshToken))
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	ref, acc, err := jwt_handler.NewTokenPair(pair.AccessToken.UserId, "client").GetStrings()
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	db.Clients.SetClientRefToken(pair.AccessToken.UserId, ref)
@@ -100,7 +117,8 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 		"refreshToken": ref,
 	})
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -112,13 +130,14 @@ func PostBasket(writer http.ResponseWriter, request *http.Request) {
 	accessTokenString := request.Header.Get("Access-Token")
 	accessClaim, err := jwt_handler.GetClaim(accessTokenString, jwt_handler.GetAccess())
 	if err != nil {
-		log.Println(accessTokenString)
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	req := Basket{}
 	err = json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	basketId := db.Clients.NewBacket(accessClaim.UserId, req)
@@ -128,7 +147,8 @@ func PostBasket(writer http.ResponseWriter, request *http.Request) {
 	})
 
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -140,7 +160,8 @@ func GetLogOut(writer http.ResponseWriter, request *http.Request) {
 	token := request.Header.Get("Access-Token")
 	claim, err := jwt_handler.GetClaim(token, jwt_handler.GetAccess())
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	db.Clients.RemoveRefresh(claim.UserId)
 }
@@ -156,7 +177,8 @@ func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
 	}
 	err := json.NewEncoder(writer).Encode(response)
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -168,7 +190,8 @@ func GetSuppliers(writer http.ResponseWriter, request *http.Request) {
 	suppliers := db.Suppliers.GetSuppliers()
 	err := json.NewEncoder(writer).Encode(suppliers)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInsufficientStorage)
+		return
 	}
 }
 
@@ -179,10 +202,12 @@ func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
 	}
 	supplierId, err := strconv.Atoi(request.URL.Query().Get("id"))
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
 	}
 	err = json.NewEncoder(writer).Encode(db.Products.GetProducts(int64(supplierId)))
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
