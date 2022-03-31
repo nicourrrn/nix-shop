@@ -19,7 +19,7 @@
       <input type="button" @click="this.SignUp" value="SignUp" :disabled="password !== copyPassword || password.length === 0 || name.length === 0 || email.length === 0">
     </div>
     <input type="button" :value="newUser ? 'SingIn' : 'SingUp'" @click="() => newUser = !newUser"/>
-    <input type="button" value="LogOut" @click="() => $store.user.dispatch('LogOut')" />
+    <input type="button" value="LogOut" @click="() => $store.dispatch('logOut')" />
   </div>
 </template>
 
@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     SignIn () {
-      this.$store.user.dispatch('signIn', { email: this.email, password: this.password })
+      this.$store.dispatch('signIn', { email: this.email, password: this.password })
     },
     SignUp () {
-      this.$store.user.dispatch('signUp', { name: this.name, email: this.email, password: this.password })
+      this.$store.dispatch('signUp', { name: this.name, email: this.email, password: this.password })
     }
   }
 }

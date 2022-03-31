@@ -1,14 +1,14 @@
 <template>
   <div class="menu">
     <div class="menu-setting">
-      <div class="sort-setting">
+      <div class="ingredients-setting">
         <input
           v-model="setting.input_form"
           placeholder="Название ингредиента"
           type="text"
           class="ingredient-input"
         />
-        <div class="sort-preview">
+        <div class="ingredients-preview">
           <div
             v-for="(ingredient, index) in addebleIngredients.slice(0, 10)"
             :key="index"
@@ -18,6 +18,7 @@
             {{ ingredient }}
           </div>
         </div>
+        <h4>Обрані фільтри</h4>
         <div class="checked-ingredients">
           <div
             v-for="(ingredient, index) in this.setting.added_ingredient"
@@ -29,6 +30,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <div class="menu-list">
       <ProductListElement
@@ -55,14 +57,14 @@ export default {
   },
   computed: {
     addebleIngredients () {
-      return this.$store.suppliers.getters.ingredients.filter(
+      return this.$store.getters.ingredients.filter(
         (value) =>
           !this.setting.added_ingredient.includes(value) &&
           value.startsWith(this.setting.input_form)
       )
     },
     lookedProducts () {
-      return this.$store.suppliers.getters.products.filter(
+      return this.$store.getters.products.filter(
         product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient))
       )
     }
@@ -72,7 +74,7 @@ export default {
     ProductListElement
   },
   mounted () {
-    this.$store.suppliers.dispatch('getData')
+    this.$store.dispatch('getData')
   }
 }
 </script>
@@ -87,11 +89,19 @@ export default {
   margin: 2vh 2vw
   .ingredient-input
     width: 100%
+
+.ingredients-preview
   .ingredient
     margin: 1vw 0
     &:hover
       color: dodgerblue
       cursor: cell
+.checked-ingredients
+  .ingredient
+    margin: 1vw 0
+    &:hover
+      color: red
+      cursor: alias
 
 .menu-list
   display: grid

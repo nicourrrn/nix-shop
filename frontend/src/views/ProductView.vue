@@ -29,7 +29,7 @@ export default {
   name: 'ProductView',
   computed: {
     product () {
-      for (const value of this.$store.suppliers.getters.products) {
+      for (const value of this.$store.getters.products) {
         if (value.id === Number(this.$route.params.id)) {
           return value
         }
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     addToBasket () {
-      this.$store.user.commit('addProductToBasket', { product: this.product, count: this.productCount })
+      this.$store.commit('addProductToBasket', { product: this.product, count: this.productCount })
       this.$router.push('/basket')
     }
   },

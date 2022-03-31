@@ -1,7 +1,7 @@
 import axios from 'axios'
 const backendUrl = 'http://localhost:8000'
 
-const suppliersModule = {
+export default {
   state: {
     allIngredients: [],
     suppliers: [],
@@ -43,5 +43,3 @@ const suppliersModule = {
     }
   }
 }
-
-export { suppliersModule }

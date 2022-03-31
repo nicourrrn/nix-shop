@@ -34,7 +34,7 @@ export default {
   methods: {
     buy () {
       if (this.address !== '') {
-        this.$store.user.commit('setUser', {address: this.address})
+        this.$store.user.commit('setUser', { address: this.address })
         this.$store.user.dispatch('sendBasket')
         this.$router.push('/')
       }

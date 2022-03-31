@@ -8,15 +8,15 @@ import (
 
 func main() {
 	api := http.NewServeMux()
-	mainMiddleware := alice.New(AddHeaders)
-	api.Handle("/ingredients", mainMiddleware.ThenFunc(GetAllIngredients))
-	api.Handle("/user/signin", mainMiddleware.ThenFunc(PostSignIn))
-	api.Handle("/user/signup", mainMiddleware.ThenFunc(PostSignUp))
-	api.Handle("/user/refresh", mainMiddleware.ThenFunc(PostRefresh))
-	api.Handle("/user/logout", mainMiddleware.ThenFunc(GetLogOut))
-	api.Handle("/suppliers", mainMiddleware.ThenFunc(GetSuppliers))
-	api.Handle("/products", mainMiddleware.ThenFunc(GetSupplierMenu))
-	api.Handle("/basket/new", mainMiddleware.ThenFunc(PostBasket))
+	headersMiddleware := alice.New(AddHeaders)
+	api.Handle("/ingredients", headersMiddleware.ThenFunc(GetAllIngredients))
+	api.Handle("/user/signin", headersMiddleware.ThenFunc(PostSignIn))
+	api.Handle("/user/signup", headersMiddleware.ThenFunc(PostSignUp))
+	api.Handle("/user/refresh", headersMiddleware.ThenFunc(PostRefresh))
+	api.Handle("/user/logout", headersMiddleware.ThenFunc(GetLogOut))
+	api.Handle("/suppliers", headersMiddleware.ThenFunc(GetSuppliers))
+	api.Handle("/products", headersMiddleware.ThenFunc(GetSupplierMenu))
+	api.Handle("/basket/new", headersMiddleware.ThenFunc(PostBasket))
 
 	log.Println(http.ListenAndServe(":8000", api))
 

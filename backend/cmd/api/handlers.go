@@ -11,21 +11,6 @@ import (
 	"strconv"
 )
 
-func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
-	if request.Method != http.MethodGet {
-		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	response := make([]string, 0)
-	for _, ingr := range db.Products.GetAllIngredients() {
-		response = append(response, ingr.Name)
-	}
-	err := json.NewEncoder(writer).Encode(response)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
 func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 	if !(request.Method == http.MethodPost) {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
@@ -119,33 +104,6 @@ func PostRefresh(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func GetSuppliers(writer http.ResponseWriter, request *http.Request) {
-	if request.Method != http.MethodGet {
-		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	suppliers := db.Suppliers.GetSuppliers()
-	err := json.NewEncoder(writer).Encode(suppliers)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
-	if request.Method != http.MethodGet {
-		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	supplierId, err := strconv.Atoi(request.URL.Query().Get("id"))
-	if err != nil {
-		panic(err)
-	}
-	err = json.NewEncoder(writer).Encode(db.Products.GetProducts(int64(supplierId)))
-	if err != nil {
-		panic(err)
-	}
-}
-
 func PostBasket(writer http.ResponseWriter, request *http.Request) {
 	if request.Method != http.MethodPost {
 		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
@@ -185,4 +143,46 @@ func GetLogOut(writer http.ResponseWriter, request *http.Request) {
 		panic(err)
 	}
 	db.Clients.RemoveRefresh(claim.UserId)
+}
+
+func GetAllIngredients(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	response := make([]string, 0)
+	for _, ingr := range db.Products.GetAllIngredients() {
+		response = append(response, ingr.Name)
+	}
+	err := json.NewEncoder(writer).Encode(response)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func GetSuppliers(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	suppliers := db.Suppliers.GetSuppliers()
+	err := json.NewEncoder(writer).Encode(suppliers)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	supplierId, err := strconv.Atoi(request.URL.Query().Get("id"))
+	if err != nil {
+		panic(err)
+	}
+	err = json.NewEncoder(writer).Encode(db.Products.GetProducts(int64(supplierId)))
+	if err != nil {
+		panic(err)
+	}
 }

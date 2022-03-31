@@ -1,7 +1,7 @@
 import axios from 'axios'
 const backendUrl = 'http://localhost:8000'
 
-const userModule = {
+export default {
   state: {
     checkedProducts: [],
     address: '',
@@ -44,8 +44,10 @@ const userModule = {
   },
   actions: {
     loadUser (context) {
-      const savedUser = localStorage.getItem('userData')
-      context.commit('setUser', JSON.parse(savedUser))
+      const savedUser = JSON.parse(localStorage.getItem('userData'))
+      if (savedUser !== null) {
+        context.commit('setUser', savedUser)
+      }
     },
     async signIn (context, userForm) {
       const email = userForm.email
@@ -144,5 +146,3 @@ const userModule = {
     }
   }
 }
-
-export { userModule }

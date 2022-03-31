@@ -27,7 +27,7 @@ export default {
   name: 'SupplierView',
   computed: {
     supplier () {
-      for (const value of this.$store.suppliers.getters.suppliers) {
+      for (const value of this.$store.getters.suppliers) {
         if (value.id === Number(this.$route.params.id)) {
           return value
         }
@@ -35,7 +35,7 @@ export default {
       return []
     },
     menu () {
-      const menu = this.$store.suppliers.getters.products
+      const menu = this.$store.getters.products
       return menu.filter(value => value.supplier.id === this.supplier.id)
     }
   },
