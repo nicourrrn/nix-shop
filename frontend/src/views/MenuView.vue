@@ -55,14 +55,14 @@ export default {
   },
   computed: {
     addebleIngredients () {
-      return this.$store.getters.ingredients.filter(
+      return this.$store.suppliers.getters.ingredients.filter(
         (value) =>
           !this.setting.added_ingredient.includes(value) &&
           value.startsWith(this.setting.input_form)
       )
     },
     lookedProducts () {
-      return this.$store.getters.products.filter(
+      return this.$store.suppliers.getters.products.filter(
         product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient))
       )
     }
@@ -72,7 +72,7 @@ export default {
     ProductListElement
   },
   mounted () {
-    this.$store.dispatch('loadData')
+    this.$store.suppliers.dispatch('getData')
   }
 }
 </script>
