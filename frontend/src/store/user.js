@@ -28,6 +28,9 @@ export default {
         state.checkedProducts.push(saledProductInfo)
       }
     },
+    removeProductFromBasket (state, productId) {
+      state.checkedProducts = state.checkedProducts.filter(value => value.product.id !== productId)
+    },
     setUser (state, user) {
       for (const [key, value] of Object.entries(user)) {
         if (!['address', 'name', 'phone', 'accessToken'].includes(key)) {
@@ -43,9 +46,6 @@ export default {
         phone: state.phone,
         accessToken: state.accessToken
       }))
-    },
-    removeProductFromBasket (state, productId) {
-      state.checkedProducts = state.checkedProducts.filter(value => value.product.id !== productId)
     }
   },
   actions: {
@@ -175,6 +175,8 @@ export default {
       axios
         .get(`${backendUrl}/user/logout`, { headers: { 'Access-Token': token } })
         .catch(err => alert(err))
+      state.commit('clearBasket')
+      state.commit('setUser', { address: '', name: '', phone: '', accessToken: '' })
     }
   }
 }

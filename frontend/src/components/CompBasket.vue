@@ -1,9 +1,8 @@
 <template>
   <div class="component">
-    <div class="date-address">
-      <p class="date"> Date: {{ basket.date }} </p>
-      <p class="address">Address: {{basket.address}} </p>
-    </div>
+    <span class="id"> Id: {{basket.id}}</span>
+    <p class="date"> Date: {{ basket.date }} </p>
+    <p class="address">Address: {{basket.address}} </p>
     <span>Product list:</span>
     <div class="products">
         <span
@@ -26,10 +25,11 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.date
-  color: black
-.date-address
-  display: flex
+.component
   *
-    margin-right: 5px
+    margin: 0
+.products
+  *
+    color: black
+
 </style>

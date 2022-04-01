@@ -2,7 +2,7 @@
   <div v-if="$store.getters.userData.accessToken === ''">
     <h1>Необхідна авторизація!</h1>
   </div>
-  <div>
+  <div v-else>
       <div class="buy-menu">
         <span>Адресс:</span>
         <input type="text" v-model="address"/>
