@@ -33,7 +33,7 @@ func (repo *clientRepo) NewClient(name, phone, password string) (int64, error) {
 func (repo *clientRepo) GetClient(phone string, password string) (id int64, name string, err error) {
 	row := repo.connection.QueryRow("SELECT id, name, password FROM clients WHERE phone = ?", phone)
 	var savedPassword string
-	err = row.Scan(&id, &name, &password)
+	err = row.Scan(&id, &name, &savedPassword)
 	if err != nil {
 		return
 	}
@@ -93,4 +93,18 @@ func (repo *clientRepo) RemoveRefresh(clientId int64) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func (repo *clientRepo) AllBasket(clientId int64) (baskets []SavedBasket, err error) {
+	err = repo.connection.Select(&baskets, "SELECT id, address, price, create_at FROM baskets WHERE client_id = ?", clientId)
+	if err != nil {
+		return
+	}
+	for i := range baskets {
+		err = repo.connection.Select(&baskets[i].Products, "SELECT p.id, p.name FROM product_basket as pb JOIN products p on p.id = pb.product_id WHERE pb.basket_id = ?", baskets[i].Id)
+		if err != nil {
+			return
+		}
+	}
+	return
 }

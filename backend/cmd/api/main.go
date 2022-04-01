@@ -17,7 +17,7 @@ func main() {
 	api.Handle("/suppliers", headersMiddleware.ThenFunc(GetSuppliers))
 	api.Handle("/products", headersMiddleware.ThenFunc(GetSupplierMenu))
 	api.Handle("/basket/new", headersMiddleware.ThenFunc(PostBasket))
-
+	api.Handle("/basket/all", headersMiddleware.ThenFunc(GetAllBasket))
 	log.Println(http.ListenAndServe(":8000", api))
 
 }

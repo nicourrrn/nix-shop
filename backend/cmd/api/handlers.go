@@ -211,3 +211,27 @@ func GetSupplierMenu(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 }
+
+func GetAllBasket(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	token := request.Header.Get("Access-Token")
+	claim, err := jwt_handler.GetClaim(token, jwt_handler.GetAccess())
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
+	}
+	baskets, err := db.Clients.AllBasket(claim.UserId)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = json.NewEncoder(writer).Encode(baskets)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}

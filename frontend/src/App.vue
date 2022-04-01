@@ -2,7 +2,8 @@
     <nav>
       <div class="center">
         <router-link to="/">Menu</router-link> |
-        <router-link to="/basket">Basket</router-link>
+        <router-link to="/basket">Basket</router-link> |
+        <router-link to="/basket/all">View completed baskets</router-link>
       </div>
       <div class="right-side">
         <router-link to="/login">{{ LoginText }}</router-link> |

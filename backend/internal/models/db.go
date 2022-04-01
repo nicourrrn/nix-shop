@@ -22,3 +22,11 @@ type Supplier struct {
 	OpenAt  string `db:"open_at" json:"openAt"`
 	CloseAt string `db:"close_at" json:"closeAt"`
 }
+
+type SavedBasket struct {
+	Id       int64     `db:"id" json:"id"`
+	Date     string    `db:"create_at" json:"date"`
+	Products []Product `json:"products"`
+	Address  string    `db:"address" json:"address"`
+	Price    float32   `db:"price" json:"price"`
+}
