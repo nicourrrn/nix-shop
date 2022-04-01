@@ -39,10 +39,10 @@
         />
         <div class="ingredients-preview">
           <div
-            v-for="(type, index) in addebleProductTypes.slice(0, 2)"
+            v-for="(type, index) in addebleProductTypes.slice(0, 5)"
             :key="index"
             class="ingredient"
-            @click="setting.added_type.push(type)"
+            @click="() => setting.checked_type = type"
           >
             {{ type }}
           </div>
@@ -50,12 +50,10 @@
         <h4>Обрані фільтри</h4>
         <div class="checked-ingredients">
           <div
-            v-for="(type, index) in this.setting.added_type"
-            :key="index"
             class="ingredient"
-            @click="setting.added_type.pop(index)"
+            @click="() => setting.checked_type = ''"
           >
-            {{ type }}
+            {{ setting.checked_type }}
           </div>
         </div>
       </div>
@@ -81,7 +79,7 @@ export default {
         input_ingredient: '',
         added_ingredient: [],
         input_type: '',
-        added_type: []
+        checked_type: ''
       }
     }
   },
@@ -96,17 +94,16 @@ export default {
     addebleProductTypes () {
       return [...this.$store.getters.product_types].filter(
         (value) =>
-          !this.setting.added_type.includes(value) &&
+          (!(this.setting.checked_type === value) || this.setting.checked_type === '') &&
           value.startsWith(this.setting.input_type)
       )
     },
     lookedProducts () {
       return this.$store.getters.products.filter(
         product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient)) &&
-          this.setting.added_type.every(type => product.type === type)
+          (this.setting.checked_type === '' || product.type === this.setting.checked_type)
       )
     }
-
   },
   components: {
     ProductListElement
