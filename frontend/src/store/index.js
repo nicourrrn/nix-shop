@@ -1,9 +1,14 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex'
+
+import user from './user'
+import suppliers from './suppliers'
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
-});
+  getters: {
+    backendUrl: () => 'http://localhost:8000'
+  },
+  modules: {
+    user,
+    suppliers
+  }
+})

@@ -4,15 +4,35 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Init commit" />
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add error return">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CompBasket.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CompBasket.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/store/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
   <component name="GOROOT" url="file:///usr/lib/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
@@ -30,8 +50,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mariadb" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.format.on.save.advertiser.fired" value="true" />
     <property name="go.formatter.settings.were.checked" value="true" />
@@ -45,6 +68,47 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmd/updater" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build backend/cmd/api">
+    <configuration name="go build backend/cmd/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="accessKey" value="access" />
+        <env name="refreshKey" value="refresh" />
+        <env name="accessLifeTime" value="60" />
+        <env name="refreshLifeTime" value="600" />
+      </envs>
+      <kind value="PACKAGE" />
+      <package value="backend/cmd/api" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/api/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build backend/cmd/updater" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="backend/cmd/updater" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/updater/main.go" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build backend/cmd/api" />
+      <item itemvalue="Go Build.go build backend/cmd/updater" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build backend/cmd/api" />
+        <item itemvalue="Go Build.go build backend/cmd/updater" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -66,7 +130,20 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="Init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init commit" />
+    <MESSAGE value="Add login page&#10;Restruct vue store" />
+    <MESSAGE value="Add ingredients handler" />
+    <MESSAGE value="Add jwt token support" />
+    <MESSAGE value="Add auth and supplier handlers" />
+    <MESSAGE value="Add getting by supplier handlers" />
+    <MESSAGE value="Add client refresh handlers" />
+    <MESSAGE value="Add cookies support and handlers" />
+    <MESSAGE value="Rebase from cookies to localStorage" />
+    <MESSAGE value="Add client request" />
+    <MESSAGE value="Add new basket handler" />
+    <MESSAGE value="Add logout and print username from login btn" />
+    <MESSAGE value="Refactor models and db wrapping" />
+    <MESSAGE value="Add error return" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add error return" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
