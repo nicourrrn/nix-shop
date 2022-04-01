@@ -17,12 +17,13 @@
 export default {
   computed: {
     LoginText () {
-      const userDefined = this.user !== undefined
-      const haveName = typeof (this.user.name) === 'string'
-      const lenMoreZero = this.user.name.length > 0
+      const user = this.$store.getters.userData
+      const userDefined = user !== undefined
+      const haveName = typeof (user.name) === 'string'
+      const lenMoreZero = user.name.length > 0
       console.log(userDefined, haveName, lenMoreZero)
       if (userDefined && haveName && lenMoreZero) {
-        return `Привіт, ${this.user.name}`
+        return `Привіт, ${user.name}`
       } else {
         return 'Login'
       }
@@ -30,8 +31,7 @@ export default {
   },
   data () {
     return {
-      updater: undefined,
-      user: this.$store.getters.userData
+      updater: undefined
     }
   },
   mounted () {

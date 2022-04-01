@@ -9,10 +9,10 @@
         <input type="button" value="Замовити" @click="buy"/>
       </div>
       <div class="product-list">
-        <div class="product" v-for="(productInfo, index) in $store.user.getters.checkedProducts" :key="index">
+        <div class="product" v-for="(productInfo, index) in $store.getters.checkedProducts" :key="index">
           <ProductListElement :product="productInfo.product"></ProductListElement>
           <input type="number" v-model="productInfo.count" max="20" min="1"/>
-          <input type="button" value="Видалити" @click="() => $store.user.commit('removeProductFromBasket', productInfo.product.id)">
+          <input type="button" value="Видалити" @click="() => $store.commit('removeProductFromBasket', productInfo.product.id)">
         </div>
       </div>
   </div>
@@ -34,8 +34,8 @@ export default {
   methods: {
     buy () {
       if (this.address !== '') {
-        this.$store.user.commit('setUser', { address: this.address })
-        this.$store.user.dispatch('sendBasket')
+        this.$store.commit('setUser', { address: this.address })
+        this.$store.dispatch('sendBasket')
         this.$router.push('/')
       }
     }

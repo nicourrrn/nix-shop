@@ -6,7 +6,7 @@ export default {
     checkedProducts: [],
     address: '',
     name: '',
-    email: '',
+    phone: '',
     accessToken: ''
   },
   getters: {
@@ -14,7 +14,7 @@ export default {
     userData: (state) => ({
       address: state.address,
       name: state.name,
-      email: state.email,
+      phone: state.phone,
       accessToken: state.accessToken
     })
   },
@@ -25,18 +25,24 @@ export default {
     addProductToBasket (state, saledProductInfo) {
       const productsIds = state.checkedProducts.map(value => value.product.id)
       if (!productsIds.includes(saledProductInfo.product.id)) {
-        state.basket.productsInfo.push(saledProductInfo)
+        state.checkedProducts.push(saledProductInfo)
       }
     },
     setUser (state, user) {
-      for (const [key, value] of user.entries()) {
-        if (!['address', 'name', 'email', 'accessToken'].includes(key)) {
+      for (const [key, value] of Object.entries(user)) {
+        if (!['address', 'name', 'phone', 'accessToken'].includes(key)) {
           console.log(`Error key ${key} with value ${value}`)
         } else {
+          console.log(key)
           state[key] = value
         }
       }
-      localStorage.setItem('userData', JSON.stringify(state.getters.userData))
+      localStorage.setItem('userData', JSON.stringify({
+        address: state.address,
+        name: state.name,
+        phone: state.phone,
+        accessToken: state.accessToken
+      }))
     },
     removeProductFromBasket (state, productId) {
       state.checkedProducts = state.checkedProducts.filter(value => value.product.id !== productId)
@@ -50,22 +56,28 @@ export default {
       }
     },
     async signIn (context, userForm) {
-      const email = userForm.email
+      const phone = userForm.phone
       const password = userForm.password
 
-      if (email.length === 0 || password.length === 0) {
+      if (phone.length === 0 || password.length === 0) {
         alert('Empty line')
         return
       }
-      const response = (await axios.post(`${backendUrl}/user/signin`,
-        JSON.stringify({
-          email: email,
-          password: password
-        }))).data
+      let response
+      try {
+        response = (await axios.post(`${backendUrl}/user/signin`,
+          JSON.stringify({
+            phone: phone,
+            password: password
+          }))).data
+      } catch (e) {
+        alert(e)
+        return
+      }
 
       const newUser = {
         name: response.name,
-        email: email,
+        phone: phone,
         accessToken: response.accessToken
       }
       localStorage.setItem('refreshToken', response.refreshToken)
@@ -73,21 +85,26 @@ export default {
     },
     async signUp (context, userForm) {
       const name = userForm.name
-      const email = userForm.email
+      const phone = userForm.phone
       const password = userForm.password
 
-      if (name.length === 0 || email.length === 0 || password.length === 0) {
+      if (name.length === 0 || phone.length === 0 || password.length === 0) {
         alert('Empty line')
         return
       }
-
-      const response = (await axios.post(
-        `${backendUrl}/user/signup`,
-        JSON.stringify({ name: name, email: email, password: password })
-      )).data
+      let response
+      try {
+        response = (await axios.post(
+          `${backendUrl}/user/signup`,
+          JSON.stringify({ name: name, phone: phone, password: password })
+        )).data
+      } catch (e) {
+        alert(e)
+        return
+      }
       const newUser = {
         name: name,
-        email: email,
+        phone: phone,
         accessToken: response.accessToken
       }
       localStorage.setItem('refreshToken', response.refreshToken)
@@ -101,12 +118,18 @@ export default {
         console.log('access is null')
         return
       }
-      const response = (await axios.post(`${backendUrl}/user/refresh`, JSON.stringify(
-        {
-          accessToken: user.accessToken,
-          refreshToken: refreshToken
-        }
-      ))).data
+      let response
+      try {
+        response = (await axios.post(`${backendUrl}/user/refresh`, JSON.stringify(
+          {
+            accessToken: user.accessToken,
+            refreshToken: refreshToken
+          }
+        ))).data
+      } catch (e) {
+        alert(e)
+        return
+      }
 
       const newUser = {
         accessToken: response.accessToken
@@ -124,11 +147,20 @@ export default {
       }))
 
       const user = context.getters.userData
-      const response = (await axios.post(
-        `${backendUrl}/basket/new`,
-        JSON.stringify({ address: user.address, products: savedProducts }),
-        { headers: { 'Access-Token': user.accessToken } }
-      )).data
+      let response
+      try {
+        response = (await axios.post(
+          `${backendUrl}/basket/new`,
+          JSON.stringify({
+            address: user.address,
+            products: savedProducts
+          }),
+          { headers: { 'Access-Token': user.accessToken } }
+        )).data
+      } catch (e) {
+        alert(e)
+        return
+      }
 
       alert(`Дякуємо за замовлення, ваш номер ${response.basketId}`)
       context.commit('clearBasket')
@@ -142,7 +174,7 @@ export default {
       }
       axios
         .get(`${backendUrl}/user/logout`, { headers: { 'Access-Token': token } })
-        .catch(err => console.log(err))
+        .catch(err => alert(err))
     }
   }
 }

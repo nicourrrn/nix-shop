@@ -10,7 +10,8 @@ export default {
   getters: {
     suppliers: (state) => state.suppliers,
     ingredients: (state) => state.allIngredients,
-    products: (state) => state.products
+    products: (state) => state.products,
+    product_types: (state) => new Set(state.products.map(value => value.type))
   },
   mutations: {
     setIngredients (state, newIngredients) {
@@ -29,7 +30,14 @@ export default {
         .then(value => {
           context.commit('setIngredients', value.data)
         })
-      const suppliers = (await axios.get(`${backendUrl}/suppliers`)).data
+        .catch(e => alert(e))
+      let suppliers
+      try {
+        suppliers = (await axios.get(`${backendUrl}/suppliers`)).data
+      } catch (e) {
+        alert(e)
+        return
+      }
       for (const s of suppliers) {
         axios.get(`${backendUrl}/products?id=${s.id}`)
           .then(value => {
@@ -38,6 +46,7 @@ export default {
               context.commit('addProduct', p)
             })
           })
+          .catch(e => { alert(e) })
       }
       context.commit('setSuppliers', suppliers)
     }

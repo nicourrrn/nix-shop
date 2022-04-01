@@ -3,7 +3,7 @@
     <div class="menu-setting">
       <div class="ingredients-setting">
         <input
-          v-model="setting.input_form"
+          v-model="setting.input_ingredient"
           placeholder="Название ингредиента"
           type="text"
           class="ingredient-input"
@@ -30,7 +30,35 @@
           </div>
         </div>
       </div>
-
+      <div class="type-setting">
+        <input
+          v-model="setting.input_type"
+          placeholder="Название типа"
+          type="text"
+          class="ingredient-input"
+        />
+        <div class="ingredients-preview">
+          <div
+            v-for="(type, index) in addebleProductTypes.slice(0, 2)"
+            :key="index"
+            class="ingredient"
+            @click="setting.added_type.push(type)"
+          >
+            {{ type }}
+          </div>
+        </div>
+        <h4>Обрані фільтри</h4>
+        <div class="checked-ingredients">
+          <div
+            v-for="(type, index) in this.setting.added_type"
+            :key="index"
+            class="ingredient"
+            @click="setting.added_type.pop(index)"
+          >
+            {{ type }}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="menu-list">
       <ProductListElement
@@ -50,8 +78,10 @@ export default {
   data () {
     return {
       setting: {
-        input_form: '',
-        added_ingredient: []
+        input_ingredient: '',
+        added_ingredient: [],
+        input_type: '',
+        added_type: []
       }
     }
   },
@@ -60,12 +90,20 @@ export default {
       return this.$store.getters.ingredients.filter(
         (value) =>
           !this.setting.added_ingredient.includes(value) &&
-          value.startsWith(this.setting.input_form)
+          value.startsWith(this.setting.input_ingredient)
+      )
+    },
+    addebleProductTypes () {
+      return [...this.$store.getters.product_types].filter(
+        (value) =>
+          !this.setting.added_type.includes(value) &&
+          value.startsWith(this.setting.input_type)
       )
     },
     lookedProducts () {
       return this.$store.getters.products.filter(
-        product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient))
+        product => this.setting.added_ingredient.every(ingredient => product.ingredients.includes(ingredient)) &&
+          this.setting.added_type.every(type => product.type === type)
       )
     }
 

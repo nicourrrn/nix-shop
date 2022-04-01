@@ -11,18 +11,18 @@ type clientRepo struct {
 	connection *sqlx.DB
 }
 
-func (repo *clientRepo) NewClient(name, email, password string) (int64, error) {
+func (repo *clientRepo) NewClient(name, phone, password string) (int64, error) {
 	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return -1, err
 	}
 	scannedClient := BaseClient{
 		Name:     name,
-		Email:    email,
+		Phone:    phone,
 		Password: string(encryptedPassword),
 	}
 	result, err := repo.connection.NamedExec(
-		"INSERT INTO clients(name, email, password) VALUE (:name, :email, :password)",
+		"INSERT INTO clients(name, phone, password) VALUE (:name, :phone, :password)",
 		scannedClient)
 	if err != nil {
 		return -1, err
@@ -30,8 +30,8 @@ func (repo *clientRepo) NewClient(name, email, password string) (int64, error) {
 	return result.LastInsertId()
 }
 
-func (repo *clientRepo) GetClient(email string, password string) (id int64, name string, err error) {
-	row := repo.connection.QueryRow("SELECT id, name, password FROM clients WHERE email = ?", email)
+func (repo *clientRepo) GetClient(phone string, password string) (id int64, name string, err error) {
+	row := repo.connection.QueryRow("SELECT id, name, password FROM clients WHERE phone = ?", phone)
 	var savedPassword string
 	err = row.Scan(&id, &name, &password)
 	if err != nil {

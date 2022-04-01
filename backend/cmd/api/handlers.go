@@ -21,7 +21,7 @@ func PostSignUp(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 		return
 	}
-	clientId, err := db.Clients.NewClient(req.Name, req.Email, req.Password)
+	clientId, err := db.Clients.NewClient(req.Name, req.Phone, req.Password)
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 		return
@@ -57,7 +57,7 @@ func PostSignIn(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	id, name, err := db.Clients.GetClient(req.Email, req.Password)
+	id, name, err := db.Clients.GetClient(req.Phone, req.Password)
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 		return

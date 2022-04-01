@@ -1,22 +1,22 @@
 <template>
   <div class="login">
     <div v-if="!newUser" class="login-form">
-      <p>Email</p>
-      <input type="email" v-model="email"/>
+      <p>Phone</p>
+      <input type="text" v-model="phone"/>
       <p>Password</p>
       <input type="password" v-model="password">
-      <input type="button" @click="this.SignIn" value="SignIn" :disabled="email.length === 0 || password.length === 0">
+      <input type="button" @click="this.SignIn" value="SignIn" :disabled="phone.length === 0 || password.length === 0">
     </div>
     <div v-else class="login-form">
       <p>Name</p>
       <input type="text" v-model="name">
-      <p>Login</p>
-      <input type="email" v-model="email"/>
+      <p>Phone</p>
+      <input type="text" v-model="phone"/>
       <p>Password</p>
       <input type="password" v-model="password">
       <p>Password again</p>
       <input type="password" v-model="copyPassword">
-      <input type="button" @click="this.SignUp" value="SignUp" :disabled="password !== copyPassword || password.length === 0 || name.length === 0 || email.length === 0">
+      <input type="button" @click="this.SignUp" value="SignUp" :disabled="password !== copyPassword || password.length === 0 || name.length === 0 || phone.length === 0">
     </div>
     <input type="button" :value="newUser ? 'SingIn' : 'SingUp'" @click="() => newUser = !newUser"/>
     <input type="button" value="LogOut" @click="() => $store.dispatch('logOut')" />
@@ -24,15 +24,12 @@
 </template>
 
 <script>
-
-// import axios from 'axios'
-
 export default {
   name: 'LoginView',
   data () {
     return {
       name: '',
-      email: '',
+      phone: '',
       password: '',
       copyPassword: '',
       newUser: false
@@ -40,11 +37,17 @@ export default {
   },
   methods: {
     SignIn () {
-      this.$store.dispatch('signIn', { email: this.email, password: this.password })
+      this.$store.dispatch('signIn', { phone: this.phone, password: this.password })
     },
     SignUp () {
-      this.$store.dispatch('signUp', { name: this.name, email: this.email, password: this.password })
+      this.$store.dispatch('signUp', { name: this.name, phone: this.phone, password: this.password })
     }
+  },
+  mounted () {
+    const user = this.$store.getters.userData
+    console.log(user)
+    this.name = user.name
+    this.phone = user.phone
   }
 }
 </script>
