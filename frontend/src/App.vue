@@ -1,12 +1,12 @@
 <template>
     <nav>
       <div class="center">
-        <router-link to="/">Menu</router-link> |
-        <router-link to="/basket">Basket</router-link> |
-        <router-link to="/basket/all">View completed baskets</router-link>
-        <router-link to="/suppliers/all">View suppliers</router-link>
+        <router-link to="/">Products</router-link> |
+        <router-link to="/suppliers/all">Suppliers</router-link>
       </div>
       <div class="right-side">
+        <router-link to="/basket">Basket</router-link> |
+        <router-link to="/basket/all">Old baskets</router-link> |
         <router-link to="/login">{{ LoginText }}</router-link> |
         <router-link to="/about">About</router-link>
       </div>
