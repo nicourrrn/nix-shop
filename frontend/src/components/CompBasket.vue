@@ -8,7 +8,7 @@
         <span
           v-for="(product, i) of basket.products"
           :key="product.id"
-          @click="() => $router.push(`products/${product.id}`)"
+          @click="() => $router.push(`/products/${product.id}`)"
         >
           {{ product.name }}{{ i != basket.products.length - 1 ? ',' : ''  }}
         </span>

@@ -7,7 +7,7 @@
     <div class="main-info">
       <h2 class="name">{{product.name}}</h2>
       <span class="supplier" @click="() => $router.push('/suppliers/'+product.supplier.id)">Постачальник: {{product.supplier.name}}</span>
-      <img :src="product.image" class="img"/>
+      <img :src="product.image" class="img" alt="Image not loaded"/>
     </div>
     <div class="sub-info">
       <span class="ingredients">Ingredients: {{ product.ingredients.join(", ") }}</span>

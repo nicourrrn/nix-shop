@@ -1,10 +1,10 @@
 <template>
-  <div class="element" @click="openPage">
-    <img :src="product.image" />
+  <div class="element" @click="() => $router.push(`/products/${this.product.id}`)">
+    <img :src="product.image" alt="Image not loaded"/>
     <div class="name">{{ product.name }}</div>
     <div class="description">
       <div class="type">Type: {{ product.type }}</div>
-      <div class="price">Price: {{ product.price }}</div>
+      <div class="price">Price: {{ product.price * count }}</div>
     </div>
   </div>
 </template>
@@ -12,10 +12,13 @@
 <script>
 export default {
   name: 'ProductListElement',
-  props: ['product'],
-  methods: {
-    openPage () {
-      this.$router.push(`/products/${this.product.id}`)
+  props: {
+    product: {
+      type: Object
+    },
+    count: {
+      type: Number,
+      default: 1
     }
   }
 }

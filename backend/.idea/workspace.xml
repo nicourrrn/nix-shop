@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add upd files with shops">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ProductListElement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ProductListElement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

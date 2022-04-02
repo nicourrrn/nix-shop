@@ -9,7 +9,7 @@
         <span class="type">Type: {{supplier.type}}</span>
         <span> Open at: {{supplier.openAt}} </span>
         <span> Close at: {{supplier.closeAt}} </span>
-        <img :src="supplier.image" class="img"/>
+        <img :src="supplier.image" class="img" alt="Image not loaded"/>
       </div>
       <h3>Products: </h3>
       <div class="product-list">
@@ -62,6 +62,9 @@ export default {
   margin-bottom: 10px
 .product-list
   display: flex
+  flex-wrap: wrap
+  *
+    width: 300px
   .item
     margin: 10px
 </style>

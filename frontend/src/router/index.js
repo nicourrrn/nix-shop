@@ -5,6 +5,7 @@ import ProductView from '@/views/ProductView'
 import BasketView from '@/views/BasketView'
 import LoginView from '@/views/LoginView'
 import SupplierView from '@/views/SupplierView'
+import SuppliersView from '@/views/SuppliersView'
 import CompletedBasketsView from '@/views/CompletedBasketsView'
 
 const routes = [
@@ -17,6 +18,11 @@ const routes = [
     path: '/products/:id',
     name: 'product',
     component: ProductView
+  },
+  {
+    path: '/suppliers/all',
+    name: 'suppliers',
+    component: SuppliersView
   },
   {
     path: '/suppliers/:id',
