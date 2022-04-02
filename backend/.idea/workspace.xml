@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add database">
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="View open and close time">
+      <change afterPath="$PROJECT_DIR$/conf/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/conf/.env.dist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/conf/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db/supplier.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/supplier.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/SupplierView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/SupplierView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/updater/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/updater/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/database.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +63,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/conf" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -69,6 +72,9 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/conf" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/cmd/updater" />
     </key>
@@ -82,6 +88,9 @@
         <env name="refreshKey" value="refresh" />
         <env name="accessLifeTime" value="60" />
         <env name="refreshLifeTime" value="600" />
+        <env name="sql_username" value="nix-shop-user" />
+        <env name="sql_password" value="200303" />
+        <env name="sql_database" value="nix_shop" />
       </envs>
       <kind value="PACKAGE" />
       <package value="backend/cmd/api" />
@@ -156,7 +165,8 @@
     <MESSAGE value="Add error return" />
     <MESSAGE value="Bugfix" />
     <MESSAGE value="Add database" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add database" />
+    <MESSAGE value="View open and close time" />
+    <option name="LAST_COMMIT_MESSAGE" value="View open and close time" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

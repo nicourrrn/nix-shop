@@ -40,7 +40,7 @@ func WriteShop(shop Shop) {
 			Type:  prod.Type,
 		}, int64(shop.Id))
 
-		db.Products.ConnProdWithIngr(int64(prod.Id), prod.Ingredients)
+		db.Products.ConnProdWithIngr(prod.Id, prod.Ingredients)
 	}
 }
 
