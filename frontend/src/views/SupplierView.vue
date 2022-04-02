@@ -7,6 +7,8 @@
       <div class="main-info">
         <h2 class="name">{{supplier.name}}</h2>
         <span class="type">Type: {{supplier.type}}</span>
+        <span> Open at: {{supplier.openAt}} </span>
+        <span> Close at: {{supplier.closeAt}} </span>
         <img :src="supplier.image" class="img"/>
       </div>
       <h3>Products: </h3>
