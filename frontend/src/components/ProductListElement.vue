@@ -1,5 +1,5 @@
 <template>
-  <div class="element" @click="openPage">
+  <div class="element" @click="() => $router.push(`/products/${this.product.id}`)">
     <img :src="product.image" alt="Image not loaded"/>
     <div class="name">{{ product.name }}</div>
     <div class="description">
@@ -12,12 +12,7 @@
 <script>
 export default {
   name: 'ProductListElement',
-  props: ['product'],
-  methods: {
-    openPage () {
-      this.$router.push(`/products/${this.product.id}`)
-    }
-  }
+  props: ['product']
 }
 </script>
 

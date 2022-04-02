@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add upd files with shops">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_02_04_2022__14_39__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/SupplierListElement.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/views/SuppliersView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/ProductListElement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ProductListElement.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/ProductView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/ProductView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/SupplierView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/SupplierView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/BasketView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

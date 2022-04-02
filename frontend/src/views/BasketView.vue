@@ -44,6 +44,11 @@ export default {
 </script>
 
 <style scoped lang="sass">
+
+.product-list
+  display: flex
+  flex-wrap: wrap
+
 .buy-menu
   margin-bottom: 10px
   input
@@ -51,6 +56,8 @@ export default {
 .product
   display: flex
   flex-direction: column
+  margin: 10px
+  width: 300px
   input
     width: 50%
     align-self: center
