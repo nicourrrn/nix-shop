@@ -3,6 +3,7 @@
     <h1>Необхідна авторизація!</h1>
   </div>
   <div v-else>
+      <span> До сплати: {{ forPaymant.toFixed(2) }} </span>
       <div class="buy-menu">
         <span>Адресс:</span>
         <input type="text" v-model="address"/>
@@ -10,8 +11,8 @@
       </div>
       <div class="product-list">
         <div class="product" v-for="(productInfo, index) in $store.getters.checkedProducts" :key="index">
-          <ProductListElement :product="productInfo.product"></ProductListElement>
-          <input type="number" v-model="productInfo.count" max="20" min="1"/>
+          <ProductListElement :product="productInfo.product" :count="productInfo.count"></ProductListElement>
+          <input type="number" v-model="productInfo.count" max="20" min="1" />
           <input type="button" value="Видалити" @click="() => $store.commit('removeProductFromBasket', productInfo.product.id)">
         </div>
       </div>
@@ -38,6 +39,15 @@ export default {
         this.$store.dispatch('sendBasket')
         this.$router.push('/')
       }
+    }
+  },
+  computed: {
+    forPaymant () {
+      let result = 0
+      for (const productInfo of this.$store.getters.checkedProducts) {
+        result += productInfo.count * productInfo.product.price
+      }
+      return result
     }
   }
 }

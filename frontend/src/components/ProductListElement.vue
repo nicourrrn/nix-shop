@@ -4,7 +4,7 @@
     <div class="name">{{ product.name }}</div>
     <div class="description">
       <div class="type">Type: {{ product.type }}</div>
-      <div class="price">Price: {{ product.price }}</div>
+      <div class="price">Price: {{ product.price * count }}</div>
     </div>
   </div>
 </template>
@@ -12,7 +12,15 @@
 <script>
 export default {
   name: 'ProductListElement',
-  props: ['product']
+  props: {
+    product: {
+      type: Object
+    },
+    count: {
+      type: Number,
+      default: 1
+    }
+  }
 }
 </script>
 
