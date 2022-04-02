@@ -1,6 +1,6 @@
 <template>
   <div class="element" @click="openPage">
-    <img :src="product.image" />
+    <img :src="product.image" alt="Image not loaded"/>
     <div class="name">{{ product.name }}</div>
     <div class="description">
       <div class="type">Type: {{ product.type }}</div>

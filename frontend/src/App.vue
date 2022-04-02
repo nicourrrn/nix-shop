@@ -4,6 +4,7 @@
         <router-link to="/">Menu</router-link> |
         <router-link to="/basket">Basket</router-link> |
         <router-link to="/basket/all">View completed baskets</router-link>
+        <router-link to="/suppliers/all">View suppliers</router-link>
       </div>
       <div class="right-side">
         <router-link to="/login">{{ LoginText }}</router-link> |
@@ -38,6 +39,7 @@ export default {
   mounted () {
     this.$store.dispatch('refresh')
     this.updater = setInterval(() => this.$store.dispatch('refresh'), 50000)
+    setInterval(() => this.$store.dispatch('getData'), 10000)
   }
 }
 
