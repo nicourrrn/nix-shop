@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="View open and close time">
-      <change afterPath="$PROJECT_DIR$/conf/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conf/.env.dist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conf/.gitignore" afterDir="false" />
+    <list default="true" id="6b1c2116-65f8-42a1-bfb4-b593ce04b044" name="Changes" comment="Add upd files with shops">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/updater/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/updater/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db/database.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +22,7 @@
   <component name="GOROOT" url="file:///usr/lib/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -76,6 +72,7 @@
       <recent name="$PROJECT_DIR$/conf" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/cmd/updater" />
     </key>
   </component>
@@ -166,7 +163,9 @@
     <MESSAGE value="Bugfix" />
     <MESSAGE value="Add database" />
     <MESSAGE value="View open and close time" />
-    <option name="LAST_COMMIT_MESSAGE" value="View open and close time" />
+    <MESSAGE value="Make .env.dist" />
+    <MESSAGE value="Add upd files with shops" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add upd files with shops" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
